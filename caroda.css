@@ -1,0 +1,1138 @@
+﻿@charset "UTF-8";
+:root {
+  --caroda-horizontal-aspect-ratio-percentage: 56.25%;
+  --caroda-horizontal-with-banner-aspect-ratio-percentage: 71.8%;
+  --caroda-horizontal-4-3-aspect-ratio-percentage: 75%;
+  --caroda-vertical-aspect-ratio-percentage: 177.78%;
+  --caroda-vertical-3-4-aspect-ratio-percentage: 133.33%;
+  --caroda-square-aspect-ratio-percentage: 100%;
+  --advertising-label-height: 20px;
+  --caroda-advertising-label-color: #333;
+  --caroda-font-family: Arial, Helvetica, sans-serif;
+  /* This is dynamically set by OutstreamPlayer */
+  --caroda-slider-background-color: black; }
+
+.carodaSafeFrame * {
+  --caroda-horizontal-aspect-ratio-percentage: 100vh;
+  --caroda-horizontal-with-banner-aspect-ratio-percentage: 100vh;
+  --caroda-horizontal-4-3-aspect-ratio-percentage: 100vh;
+  --caroda-vertical-aspect-ratio-percentage: 100vh;
+  --caroda-vertical-3-4-aspect-ratio-percentage: 100vh;
+  --caroda-square-aspect-ratio-percentage: 100vh;
+  --advertising-label-height: 0;
+  --caroda-advertising-label-color: #333; }
+
+.caroda-spinner-container {
+  display: none;
+  background: rgba(20, 20, 20, 0.9);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2; }
+
+.caroda-spinner {
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 8px solid #ccc;
+  border-top: 8px solid white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+.caroda-show-spinner .caroda-spinner-container {
+  display: block; }
+
+.carodaOutstream .caroda-spinner-container {
+  background: none; }
+
+@font-face {
+  font-family: 'caroda-replay-button';
+  src: url(""); }
+
+.carodaReplayButtonContainer {
+  position: absolute;
+  background: rgba(50, 50, 50, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .carodaReplayButtonContainer .carodaReplayButton {
+    transition: opacity 0.6s ease-out;
+    opacity: 0.8;
+    min-width: 50px;
+    min-height: 50px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+    background-color: transparent;
+    color: white;
+    text-shadow: -1px 1px 1px black, 1px -1px 1px black, 1px 1px 1px black, -1px -1px 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black, -1px 0 1px black; }
+    .carodaReplayButtonContainer .carodaReplayButton.mobile, .carodaReplayButtonContainer .carodaReplayButton:hover {
+      opacity: 1; }
+    .carodaReplayButtonContainer .carodaReplayButton:before {
+      font-family: 'caroda-replay-button';
+      display: block;
+      content: '\e984';
+      font-size: 45px; }
+    .carodaReplayButtonContainer .carodaReplayButton:after {
+      content: attr(title);
+      min-width: 100px;
+      display: block;
+      margin-top: 15px; }
+  .carodaReplayButtonContainer .carodaReplayButtonErrorMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+  .carodaReplayButtonContainer .carodaReplayButton:after,
+  .carodaReplayButtonContainer .carodaReplayButtonErrorMessage {
+    font-size: 12px !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+    font-family: var(--caroda-font-family) !important; }
+
+.carodaSafeFrame .carodaReplayButton {
+  top: 50vh; }
+
+.caroda-spinner-container.interstitial {
+  background: rgba(255, 255, 255, 0.4);
+  z-index: 9999999999999999999;
+  transition: opacity 0.3s;
+  opacity: 0;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; }
+  .caroda-spinner-container.interstitial.caroda-interstitial-preload {
+    z-index: -1;
+    visibility: hidden; }
+  .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80vh; }
+    @media (orientation: landscape) {
+      .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer {
+        width: 60vw;
+        max-width: 800px; } }
+    @media (orientation: portrait) {
+      .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer {
+        width: 100%; } }
+    .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaOutstream {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+    .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer.hidden .carodaOutstream {
+      /* This allows the players to have width when being preloaded but not yet visible. */
+      position: relative; }
+    .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaInterstitialClose {
+      position: absolute;
+      top: -5px;
+      right: 0;
+      font-size: 50px;
+      line-height: 50px;
+      color: #333;
+      cursor: pointer;
+      background: none;
+      border: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      padding: 0; }
+      .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaInterstitialClose:before {
+        content: '✖';
+        display: block; }
+    .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaTeadsAdLabelContainer {
+      height: 50px;
+      position: relative; }
+      .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaTeadsAdLabelContainer .carodaTeadsAdLabel {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        font-size: 25px;
+        text-align: center;
+        transform: none;
+        width: 100%; }
+    .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaSmartclipContainer.loaded {
+      height: 260px !important; }
+      .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaSmartclipContainer.loaded > * {
+        top: 25px !important; }
+      .caroda-spinner-container.interstitial .carodaInterstitialPlayerContainer.carodaContainer .carodaSmartclipContainer.loaded button.carodaInterstitialClose {
+        margin-top: -30px; }
+  .caroda-spinner-container.interstitial.carodaLoaded .carodaInterstitialPlayerContainer.carodaContainer .caroda-spinner,
+  .caroda-spinner-container.interstitial.carodaLoaded .carodaInterstitialPlayerContainer.carodaContainer .carodaReplayButton {
+    display: none; }
+  .caroda-spinner-container.interstitial.carodaLoaded .carodaInterstitialPlayerContainer.carodaContainer button.carodaInterstitialClose {
+    opacity: 1; }
+  .caroda-spinner-container.interstitial .carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaBannerContainer.loaded,
+  .caroda-spinner-container.interstitial .carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaAniview.loaded {
+    margin-top: 0;
+    padding-top: 45px; }
+    .caroda-spinner-container.interstitial .carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaBannerContainer.loaded:before,
+    .caroda-spinner-container.interstitial .carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaAniview.loaded:before {
+      padding-top: 10px; }
+  .caroda-spinner-container.interstitial .carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaAniview.loaded:before {
+    margin-top: -45px; }
+  .caroda-spinner-container.interstitial .carodaBannerContainer:before {
+    top: 0px; }
+  .caroda-spinner-container.interstitial .carodaOutstreamSlider .sliderSpacer:before {
+    top: -35px; }
+  .caroda-spinner-container.interstitial .carodaOutstream.carodaOutstreamSlider .sliderSpacer {
+    margin-top: 45px; }
+  .caroda-spinner-container.interstitial .carodaSmartclipContainer.loaded:before {
+    margin-top: -10px; }
+  .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer,
+  .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer {
+    top: 0;
+    margin-top: calc( var(--caroda-horizontal-aspect-ratio-percentage) + 45px) !important; }
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer:before,
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer:before {
+      margin-top: calc( calc(var(--caroda-horizontal-aspect-ratio-percentage) * -1) - 15px); }
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-horizontal-with-banner,
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-horizontal-with-banner {
+      margin-top: calc( var(--caroda-horizontal-with-banner-aspect-ratio-percentage) + 45px) !important; }
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-horizontal-with-banner:before,
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-horizontal-with-banner:before {
+        margin-top: calc( calc( var(--caroda-horizontal-with-banner-aspect-ratio-percentage) * -1 ) - 15px); }
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-horizontal-4-3,
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-horizontal-4-3 {
+      margin-top: calc( var(--caroda-horizontal-4-3-aspect-ratio-percentage) + 45px) !important; }
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-horizontal-4-3:before,
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-horizontal-4-3:before {
+        margin-top: calc( calc(var(--caroda-horizontal-4-3-aspect-ratio-percentage) * -1) - 15px); }
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-vertical,
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-vertical {
+      margin-top: calc( var(--caroda-vertical-aspect-ratio-percentage) + 45px) !important; }
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-vertical:before,
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-vertical:before {
+        margin-top: calc( calc(var(--caroda-vertical-aspect-ratio-percentage) * -1) - 15px); }
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-vertical-3-4,
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-vertical-3-4 {
+      margin-top: calc( var(--caroda-vertical-3-4-aspect-ratio-percentage) + 45px) !important; }
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-vertical-3-4:before,
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-vertical-3-4:before {
+        margin-top: calc( calc(var(--caroda-vertical-3-4-aspect-ratio-percentage) * -1) - 15px); }
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-square,
+    .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-square {
+      margin-top: calc( var(--caroda-square-aspect-ratio-percentage) + 45px) !important; }
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaImaOutstreamPlayer.outstreamFormat-square:before,
+      .caroda-spinner-container.interstitial .carodaOutstream:not(.carodaOutstreamSlider) div.carodaVvOutstreamPlayer.outstreamFormat-square:before {
+        margin-top: calc( calc(var(--caroda-square-aspect-ratio-percentage) * -1) - 15px); }
+
+.caroda-show-spinner .caroda-spinner-container.interstitial {
+  opacity: 1;
+  visibility: visible; }
+  .caroda-show-spinner .caroda-spinner-container.interstitial.hidden {
+    visibility: hidden; }
+
+.carodaExtendedVerticalContainer.carodaMultiPositionPlaceholder {
+  position: relative; }
+  .carodaExtendedVerticalContainer.carodaMultiPositionPlaceholder:before {
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    height: calc(100% - var(--advertising-label-height));
+    left: 0;
+    margin-top: var(--advertising-label-height);
+    position: absolute;
+    top: 0;
+    width: 100%; }
+  .carodaExtendedVerticalContainer.carodaMultiPositionPlaceholder .carodaOutstream {
+    position: sticky;
+    top: 0; }
+
+.carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder .carodaOutstream .carodaSmartclipContainer.loaded {
+  margin-top: 5px; }
+
+.carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder .carodaOutstream .carodaBannerContainer:before,
+.carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder .carodaOutstream .carodaAniview:before {
+  margin-bottom: 6px; }
+
+.carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder .carodaOutstream .carodaBannerContainer .carodaBanner > *:first-child:not(script),
+.carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder .carodaOutstream .carodaAniview .carodaBanner > *:first-child:not(script) {
+  display: block; }
+
+.carodaExtendedVerticalContainer.carodaMultiPositionPlaceholder:before {
+  margin-top: 0;
+  height: 100%; }
+
+.carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder {
+  position: absolute;
+  overflow-x: unset;
+  overflow-y: unset; }
+  .carodaMultiPosition.carodaUsingExtendedVerticalPlaceholder .carodaOutstream {
+    position: sticky; }
+
+button.caroda-download-logs {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 99999999; }
+
+:root {
+  --caroda-floating-container-top-offset: 20px;
+  --caroda-floating-container-bottom-offset: 20px;
+  --caroda-floating-container-left-offset: 20px;
+  --caroda-floating-container-right-offset: 20px; }
+
+.carodaLibraryFloatingContainer {
+  min-height: calc( 100vh - var(--caroda-floating-container-top-offset) - var( --caroda-floating-container-bottom-offset ));
+  pointer-events: none;
+  position: fixed;
+  visibility: hidden;
+  max-width: 300px;
+  width: 300px;
+  z-index: 999999; }
+  .carodaLibraryFloatingContainer .adLoaded {
+    visibility: hidden !important; }
+
+.carodaLibraryFloatingContainer:has(.carodaBannerOuterContainer) {
+  width: auto !important; }
+
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerVisible:has(
+iframe,
+img
+),
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerVisible.carodaMultiPositionPlaceholder {
+  min-height: unset;
+  pointer-events: auto;
+  visibility: visible; }
+  .carodaLibraryFloatingContainer.carodaLibraryFloatingContainerVisible:has(
+  iframe,
+  img
+) .adLoaded:not(.carodaHidden),
+  .carodaLibraryFloatingContainer.carodaLibraryFloatingContainerVisible.carodaMultiPositionPlaceholder .adLoaded:not(.carodaHidden) {
+    visibility: unset !important; }
+
+.carodaLibraryFloatingContainer
+.carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaBannerContainer.loaded,
+.carodaLibraryFloatingContainer
+.carodaContainer
+> .carodaOutstream:not(.carodaOutstreamSlider)
+.carodaAniview.loaded {
+  margin-top: 0px; }
+
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerPosition-top {
+  bottom: unset;
+  top: var(--caroda-floating-container-top-offset); }
+
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerPosition-bottom {
+  bottom: var(--caroda-floating-container-bottom-offset);
+  top: unset; }
+
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerPosition-left {
+  left: var(--caroda-floating-container-left-offset);
+  right: unset; }
+
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerPosition-right {
+  left: unset;
+  right: var(--caroda-floating-container-right-offset); }
+
+.carodaLibraryFloatingContainer.carodaLibraryFloatingContainerPosition-center {
+  left: 50%;
+  right: unset;
+  transform: translateX(-50%); }
+
+.carodaUsingFloatingPlaceholder .carodaVideoFrameBannerOuterContainer {
+  margin-top: 0 !important;
+  height: calc(100% - var(--advertising-label-height)) !important;
+  top: unset !important;
+  bottom: 0 !important; }
+
+.carodaFloatingIosAnchor {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 999999; }
+  .carodaFloatingIosAnchor.carodaLibraryFloatingContainerPosition-left {
+    justify-content: flex-start; }
+  .carodaFloatingIosAnchor.carodaLibraryFloatingContainerPosition-center {
+    justify-content: center; }
+  .carodaFloatingIosAnchor.carodaLibraryFloatingContainerPosition-right {
+    justify-content: flex-end; }
+
+.carodaFloatingIosBottom.carodaLibraryFloatingContainer {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  min-height: 0;
+  pointer-events: auto; }
+
+.carodaFloatingIosBottom.carodaLibraryFloatingContainerPosition-center {
+  transform: none; }
+
+.carodaFloatingIosBottom .carodaContainer {
+  position: static;
+  inset: auto;
+  width: 100%; }
+
+.carodaLibraryCloseButton {
+  align-items: center;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+  font-family: var(--caroda-font-family);
+  font-size: 20px;
+  justify-content: center;
+  letter-spacing: 1px;
+  outline: none;
+  padding: 5px 10px;
+  position: absolute; }
+
+.carodaLibraryCloseButton > span,
+.carodaLibraryCloseButton:before {
+  color: #fafafa; }
+
+.carodaLibraryCloseButton:before {
+  content: 'X';
+  display: inline-block;
+  margin-right: 0.25em;
+  font-weight: bold; }
+
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top {
+  transform: translateY(-100%); }
+
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center {
+  left: 50%;
+  right: unset;
+  transform: translate(-50%, -100%); }
+
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center {
+  bottom: 0;
+  left: 50%;
+  right: unset;
+  transform: translate(-50%, 100%); }
+
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom {
+  bottom: 0;
+  transform: translateY(100%); }
+
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-left {
+  left: 0;
+  right: unset; }
+
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-right {
+  left: unset;
+  right: 0; }
+
+.carodaMultiPositionPlaceholder:not(.carodaPlaceholderInUse) .carodaLibraryCloseButton,
+.carodaMultiPositionPlaceholder:not(.adLoaded) .carodaLibraryCloseButton {
+  display: none; }
+
+.carodaProtectiveLayer {
+  padding: 30px;
+  position: absolute; }
+  .carodaProtectiveLayer .carodaLibraryCloseButton {
+    position: relative; }
+
+.carodaProtectiveLayer:has(
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top
+) {
+  transform: translateY(-100%);
+  top: 30px; }
+  .carodaProtectiveLayer:has(
+  .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top
+) .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top {
+    transform: unset; }
+
+.carodaProtectiveLayer:has(
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center
+) {
+  left: 50%;
+  right: unset;
+  transform: translate(-50%, -100%); }
+  .carodaProtectiveLayer:has(
+  .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center
+) .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-top.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center {
+    left: unset;
+    right: unset;
+    transform: unset; }
+
+.carodaProtectiveLayer:has(
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center
+) {
+  bottom: 30px;
+  left: 50%;
+  right: unset;
+  transform: translate(-50%, 100%); }
+  .carodaProtectiveLayer:has(
+  .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center
+) .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-center {
+    bottom: unset;
+    left: unset;
+    right: unset;
+    transform: unset; }
+
+.carodaProtectiveLayer:has(
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom
+) {
+  bottom: 30px;
+  transform: translateY(100%); }
+  .carodaProtectiveLayer:has(
+  .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom
+) .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-bottom {
+    bottom: unset;
+    transform: unset; }
+
+.carodaProtectiveLayer:has(
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-left
+) {
+  left: -30px;
+  right: unset; }
+  .carodaProtectiveLayer:has(
+  .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-left
+) .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-left {
+    left: unset;
+    right: unset; }
+
+.carodaProtectiveLayer:has(
+.carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-right
+) {
+  left: unset;
+  right: -30px; }
+  .carodaProtectiveLayer:has(
+  .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-right
+) .carodaLibraryCloseButton.carodaLibraryCloseButtonPosition-right {
+    left: unset;
+    right: unset; }
+
+.carodaLongSessionFloatingOutstream-refreshing.carodaLibraryFloatingContainer {
+  visibility: hidden;
+  min-height: 100vh; }
+  .carodaLongSessionFloatingOutstream-refreshing.carodaLibraryFloatingContainer .carodaLibraryCloseButton {
+    display: none; }
+
+.carodaLibraryFloatingContainer .carodaLongSessionOutstream .caroda-slider-spinner {
+  display: none; }
+
+.carodaGamBannerPlayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .carodaGamBannerPlayer iframe {
+    border: none !important; }
+
+.carodaUdpContainer {
+  position: relative; }
+  .carodaUdpContainer.carodaUdpPreloading {
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; }
+  .carodaUdpContainer.carodaUdpHeightLimited .caroda-player-ima,
+  .carodaUdpContainer.carodaUdpHeightLimited .caroda-player-vast-vpaid {
+    padding-bottom: var(--caroda-horizontal-aspect-ratio-percentage) !important; }
+  .carodaUdpContainer .carodaVideoFrameBannerOuterContainer {
+    position: relative !important; }
+  .carodaUdpContainer .carodaBanner {
+    text-align: center; }
+    .carodaUdpContainer .carodaBanner > * {
+      margin: 0 auto; }
+
+:root {
+  --caroda-progress-bar-background: #5e8791;
+  --caroda-progress-bar-height: 4px;
+  --caroda-progress-color: #f5a03e; }
+
+.caroda-library-progress-bar {
+  background: var(--caroda-progress-bar-background);
+  height: var(--caroda-progress-bar-height);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto; }
+  .caroda-library-progress-bar .caroda-library-progress-bar-progress {
+    background: var(--caroda-progress-color);
+    color: var(--caroda-progress-color);
+    height: var(--caroda-progress-bar-height);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: all 0.5s linear; }
+    .caroda-library-progress-bar .caroda-library-progress-bar-progress::before {
+      content: '';
+      background: var(--caroda-progress-color);
+      position: absolute;
+      height: calc(var(--caroda-progress-bar-height) * 2);
+      width: calc(var(--caroda-progress-bar-height) * 2);
+      top: calc(var(--caroda-progress-bar-height) / -2);
+      right: calc(var(--caroda-progress-bar-height) * -1);
+      border-radius: 50%; }
+
+.caroda-library-timer {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  color: #eef;
+  text-shadow: 0 0 2px #000, 1px 1px 2px #000, 0 0 3px #000;
+  z-index: 1;
+  font-family: arial, sans-serif;
+  font-size: 14px; }
+
+.carodaContainer {
+  position: relative; }
+
+.carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) {
+  font-size: 10px;
+  line-height: 1;
+  font-family: var(--caroda-font-family);
+  overflow: hidden;
+  position: relative; }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview {
+    position: relative;
+    overflow: hidden; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview:before {
+      display: none;
+      text-align: center;
+      color: var(--caroda-advertising-label-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 9px; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer:not(.loaded),
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview:not(.loaded) {
+      visibility: hidden;
+      pointer-events: none;
+      min-height: 200px;
+      aspect-ratio: 1 / 1; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer.loaded,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview.loaded {
+      margin-top: 5px; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer.loaded:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview.loaded:before {
+        display: block; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer .carodaBanner,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview .carodaBanner {
+      overflow: hidden;
+      text-align: center; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer .carodaBanner > * > iframe,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer .carodaBanner > *,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview .carodaBanner > * > iframe,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview .carodaBanner > * {
+        margin: 0px auto; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaBannerContainer .carodaBanner .teads-inread,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview .carodaBanner .teads-inread {
+        height: auto; }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaAniview:not(.loaded) {
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow: visible; }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer {
+    position: relative;
+    opacity: 0;
+    margin-top: -10px !important;
+    padding: 0 !important;
+    transition: opacity 0.6s ease-out; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer:before {
+      display: none;
+      text-align: center;
+      color: var(--caroda-advertising-label-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 9px;
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translate(-50%, 0); }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer .caroda-player-vast-vpaid {
+      position: absolute !important;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      overflow: show;
+      padding-bottom: var(--caroda-horizontal-aspect-ratio-percentage) !important; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-horizontal-with-banner .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-horizontal-with-banner .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-horizontal-with-banner .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-horizontal-with-banner .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-horizontal-with-banner .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-horizontal-with-banner .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-horizontal-with-banner .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-horizontal-with-banner .caroda-player-ima {
+      padding-bottom: var(--caroda-horizontal-with-banner-aspect-ratio-percentage) !important; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-horizontal-4-3 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-horizontal-4-3 .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-horizontal-4-3 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-horizontal-4-3 .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-horizontal-4-3 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-horizontal-4-3 .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-horizontal-4-3 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-horizontal-4-3 .caroda-player-ima {
+      padding-bottom: var(--caroda-horizontal-4-3-aspect-ratio-percentage) !important; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-vertical .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-vertical .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-vertical .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-vertical .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-vertical .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-vertical .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-vertical .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-vertical .caroda-player-ima {
+      padding-bottom: var(--caroda-vertical-aspect-ratio-percentage) !important; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-vertical-3-4 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-vertical-3-4 .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-vertical-3-4 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-vertical-3-4 .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-vertical-3-4 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-vertical-3-4 .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-vertical-3-4 .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-vertical-3-4 .caroda-player-ima {
+      padding-bottom: var(--caroda-vertical-3-4-aspect-ratio-percentage) !important; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-square .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer.outstreamFormat-square .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-square .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer.outstreamFormat-square .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-square .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaGamBannerPlayer.outstreamFormat-square .caroda-player-ima,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-square .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaCascadeOutstreamPlayer.outstreamFormat-square .caroda-player-ima {
+      padding-bottom: var(--caroda-square-aspect-ratio-percentage) !important; }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaImaOutstreamPlayer:not(.loaded),
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider) .carodaVvOutstreamPlayer:not(.loaded) {
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    margin-top: -10px !important; }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer {
+    margin-top: calc( var(--caroda-horizontal-aspect-ratio-percentage) + var(--advertising-label-height)) !important; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer:before {
+      display: block;
+      margin-top: calc(var(--caroda-horizontal-aspect-ratio-percentage) * -1); }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer {
+    margin-top: var(--advertising-label-height) !important; }
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer,
+  .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer {
+    opacity: 1; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer > *,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer > *,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer > * {
+      transition: opacity 0.6s ease-out;
+      opacity: 0; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.loaded > *,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.loaded > *,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.loaded > * {
+      opacity: 1; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer:before {
+      display: block; }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-horizontal-with-banner,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-horizontal-with-banner,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-horizontal-with-banner {
+      margin-top: calc( var(--caroda-horizontal-with-banner-aspect-ratio-percentage) + var(--advertising-label-height)) !important; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-horizontal-with-banner:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-horizontal-with-banner:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-horizontal-with-banner:before {
+        margin-top: calc( var(--caroda-horizontal-with-banner-aspect-ratio-percentage) * -1); }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-horizontal-4-3,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-horizontal-4-3,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-horizontal-4-3 {
+      margin-top: calc( var(--caroda-horizontal-4-3-aspect-ratio-percentage) + var(--advertising-label-height)) !important; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-horizontal-4-3:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-horizontal-4-3:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-horizontal-4-3:before {
+        margin-top: calc( var(--caroda-horizontal-4-3-aspect-ratio-percentage) * -1); }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-vertical,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-vertical,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-vertical {
+      margin-top: calc( var(--caroda-vertical-aspect-ratio-percentage) + var(--advertising-label-height)) !important; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-vertical:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-vertical:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-vertical:before {
+        margin-top: calc(var(--caroda-vertical-aspect-ratio-percentage) * -1); }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-vertical-3-4,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-vertical-3-4,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-vertical-3-4 {
+      margin-top: calc( var(--caroda-vertical-3-4-aspect-ratio-percentage) + var(--advertising-label-height)) !important; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-vertical-3-4:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-vertical-3-4:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-vertical-3-4:before {
+        margin-top: calc( var(--caroda-vertical-3-4-aspect-ratio-percentage) * -1); }
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-square,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-square,
+    .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-square {
+      margin-top: calc( var(--caroda-square-aspect-ratio-percentage) + var(--advertising-label-height)) !important; }
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaImaOutstreamPlayer.outstreamFormat-square:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaVvOutstreamPlayer.outstreamFormat-square:before,
+      .carodaContainer > .carodaOutstream:not(.carodaOutstreamSlider).adLoaded .carodaGamBannerPlayer.outstreamFormat-square:before {
+        margin-top: calc(var(--caroda-square-aspect-ratio-percentage) * -1); }
+
+.carodaVideoFrameBannerOuterContainer {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  margin-top: calc( var(--caroda-outstream-padding-top) + var(--advertising-label-height)) !important;
+  height: calc( 100% - var(--caroda-outstream-padding-bottom) - var( --caroda-outstream-padding-top ) - var(--advertising-label-height)) !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: var(--caroda-slider-background-color);
+  opacity: 0 !important;
+  transition: opacity 0.6s ease-out; }
+  .carodaVideoFrameBannerOuterContainer.loaded {
+    opacity: 1 !important; }
+  .carodaVideoFrameBannerOuterContainer .carodaBannerContainer:before {
+    display: none; }
+  .carodaVideoFrameBannerOuterContainer .carodaBannerContainer .carodaBanner > iframe {
+    display: block; }
+
+.carodaInstreamWithPositions .carodaVideoFrameBannerOuterContainer {
+  height: 100% !important; }
+
+.carodaVideoFrameGamBannerOuterContainer:not(.loaded) .carodaBanner {
+  aspect-ratio: 16 / 9; }
+
+.carodaContainer
+> .carodaOutstreamSlider:not(.carodaLongSessionOutstream).adLoaded.format-small {
+  --caroda-horizontal-aspect-ratio-percentage: 100%;
+  --caroda-horizontal-4-3-aspect-ratio-percentage: 100%;
+  --caroda-square-aspect-ratio-percentage: 100%;
+  --caroda-vertical-3-4-aspect-ratio-percentage: 100%;
+  --caroda-vertical-aspect-ratio-percentage: 100%; }
+
+.carodaContainer
+> .carodaOutstreamSlider:not(.carodaLongSessionOutstream).adLoaded.format-big {
+  --caroda-horizontal-aspect-ratio-percentage: max(56.25%, 300px);
+  --caroda-horizontal-4-3-aspect-ratio-percentage: max(75%, 300px);
+  --caroda-square-aspect-ratio-percentage: max(100%, 300px);
+  --caroda-vertical-3-4-aspect-ratio-percentage: max(133.33%, 300px);
+  --caroda-vertical-aspect-ratio-percentage: max(177.78%, 300px); }
+
+.carodaContainer > .carodaOutstreamSlider {
+  font-size: 10px;
+  line-height: 1;
+  font-family: var(--caroda-font-family);
+  overflow: hidden;
+  position: relative;
+  margin: 0; }
+  .carodaContainer > .carodaOutstreamSlider .sliderSpacer:before {
+    display: none;
+    text-align: center;
+    color: var(--caroda-advertising-label-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 9px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    transition: opacity 0.6s ease-out; }
+  .carodaContainer > .carodaOutstreamSlider.playing-content .sliderSpacer:before {
+    opacity: 0; }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer:before {
+    display: block !important; }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer {
+    position: relative;
+    background: var(--caroda-slider-background-color);
+    margin-top: var(--advertising-label-height); }
+    .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer.transparent {
+      background: transparent; }
+    .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer .caroda-slider-spinner {
+      background-color: rgba(20, 20, 20, 0.5);
+      background-color: color-mix(in srgb, var(--caroda-slider-background-color) 50%, transparent 50%); }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer-horizontal {
+    padding-top: var(--caroda-horizontal-aspect-ratio-percentage); }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer-horizontal-4-3 {
+    padding-top: var(--caroda-horizontal-4-3-aspect-ratio-percentage); }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer-square {
+    padding-top: var(--caroda-square-aspect-ratio-percentage); }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer-vertical-3-4 {
+    padding-top: var(--caroda-vertical-3-4-aspect-ratio-percentage); }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .sliderSpacer-vertical {
+    padding-top: var(--caroda-vertical-aspect-ratio-percentage); }
+  .carodaContainer > .carodaOutstreamSlider.adLoaded .carodaBannerContainer {
+    align-content: center; }
+  .carodaContainer > .carodaOutstreamSlider .carodaVvOutstreamPlayer,
+  .carodaContainer > .carodaOutstreamSlider .carodaImaOutstreamPlayer,
+  .carodaContainer > .carodaOutstreamSlider .carodaImaCascadeOutstreamPlayer {
+    position: relative;
+    opacity: 0 !important;
+    padding: 0 !important;
+    padding-top: 0 !important;
+    transition: opacity 0.6s ease-out; }
+    .carodaContainer > .carodaOutstreamSlider .carodaVvOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaOutstreamPlayer:before,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaCascadeOutstreamPlayer:before {
+      display: none; }
+    .carodaContainer > .carodaOutstreamSlider .carodaVvOutstreamPlayer.loaded,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaOutstreamPlayer.loaded,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaCascadeOutstreamPlayer.loaded {
+      opacity: 1 !important; }
+    .carodaContainer > .carodaOutstreamSlider .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstreamSlider .carodaVvOutstreamPlayer .caroda-player-ima,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaOutstreamPlayer .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaOutstreamPlayer .caroda-player-ima,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaCascadeOutstreamPlayer .caroda-player-vast-vpaid,
+    .carodaContainer > .carodaOutstreamSlider .carodaImaCascadeOutstreamPlayer .caroda-player-ima {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 0 !important;
+      overflow: show !important; }
+  .carodaContainer > .carodaOutstreamSlider.format-horizontal .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaContainer > .carodaOutstreamSlider.format-horizontal .carodaImaOutstreamPlayer .caroda-player-ima {
+    padding-bottom: var(--caroda-horizontal-aspect-ratio-percentage) !important; }
+  .carodaContainer > .carodaOutstreamSlider.format-horizontal-4-3 .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaContainer > .carodaOutstreamSlider.format-horizontal-4-3 .carodaImaOutstreamPlayer .caroda-player-ima {
+    padding-bottom: var(--caroda-horizontal-4-3-aspect-ratio-percentage) !important; }
+  .carodaContainer > .carodaOutstreamSlider.format-vertical .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaContainer > .carodaOutstreamSlider.format-vertical .carodaImaOutstreamPlayer .caroda-player-ima {
+    padding-bottom: var(--caroda-vertical-aspect-ratio-percentage) !important; }
+  .carodaContainer > .carodaOutstreamSlider.format-vertical-3-4 .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaContainer > .carodaOutstreamSlider.format-vertical-3-4 .carodaImaOutstreamPlayer .caroda-player-ima {
+    padding-bottom: var(--caroda-vertical-3-4-aspect-ratio-percentage) !important; }
+  .carodaContainer > .carodaOutstreamSlider.format-square .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaContainer > .carodaOutstreamSlider.format-square .carodaImaOutstreamPlayer .caroda-player-ima {
+    padding-bottom: var(--caroda-square-aspect-ratio-percentage) !important; }
+  .carodaContainer > .carodaOutstreamSlider .carodaBannerOuterContainer::before {
+    --size: 60px;
+    --border: 8px;
+    content: '';
+    position: absolute;
+    top: calc(50% - var(--size) / 2 - var(--border));
+    left: calc(50% - var(--size) / 2 - var(--border));
+    border: var(--border) solid #ccc;
+    border-top: var(--border) solid white;
+    border-radius: 50%;
+    width: var(--size);
+    height: var(--size);
+    animation: spin 2s linear infinite;
+    z-index: 0; }
+  .carodaContainer > .carodaOutstreamSlider .carodaBannerContainer {
+    z-index: 0; }
+
+.caroda-content-player-in-carousel {
+  position: absolute !important;
+  top: calc( var(--advertising-label-height) + var(--caroda-outstream-padding-top));
+  left: 0;
+  width: 100%;
+  height: calc( 100% - var(--advertising-label-height) - var(--caroda-outstream-padding-top) - var( --caroda-outstream-padding-bottom ));
+  align-content: center;
+  padding-bottom: 0 !important;
+  z-index: 3;
+  transition: opacity 0.6s ease-out;
+  background: var(--caroda-slider-background-color); }
+  .caroda-content-player-in-carousel:not(.playing) {
+    visibility: hidden;
+    opacity: 0; }
+  .caroda-content-player-in-carousel.playing {
+    visibility: visible;
+    opacity: 1; }
+  .caroda-content-player-in-carousel.fading-out {
+    visibility: visible;
+    opacity: 0; }
+
+.carodaInstream:not(.carodaFullscreen),
+.carodaInstreamWithPositions:not(.carodaFullscreen) {
+  position: relative; }
+
+.carodaInstream .carodaImaOutstreamPlayer:not(.loaded),
+.carodaInstream .carodaVvOutstreamPlayer:not(.loaded),
+.carodaInstream .carodaImaCascadeOutstreamPlayer:not(.loaded),
+.carodaInstreamWithPositions .carodaImaOutstreamPlayer:not(.loaded),
+.carodaInstreamWithPositions .carodaVvOutstreamPlayer:not(.loaded),
+.carodaInstreamWithPositions .carodaImaCascadeOutstreamPlayer:not(.loaded) {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  margin-top: -10px !important; }
+
+.carodaInstream .carodaImaOutstreamPlayer,
+.carodaInstream .carodaVvOutstreamPlayer,
+.carodaInstreamWithPositions .carodaImaOutstreamPlayer,
+.carodaInstreamWithPositions .carodaVvOutstreamPlayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; }
+  .carodaInstream .carodaImaOutstreamPlayer.loaded,
+  .carodaInstream .carodaVvOutstreamPlayer.loaded,
+  .carodaInstreamWithPositions .carodaImaOutstreamPlayer.loaded,
+  .carodaInstreamWithPositions .carodaVvOutstreamPlayer.loaded {
+    opacity: 1; }
+  .carodaInstream .carodaImaOutstreamPlayer .caroda-player-ima,
+  .carodaInstream .carodaImaOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaInstream .carodaVvOutstreamPlayer .caroda-player-ima,
+  .carodaInstream .carodaVvOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaInstreamWithPositions .carodaImaOutstreamPlayer .caroda-player-ima,
+  .carodaInstreamWithPositions .carodaImaOutstreamPlayer .caroda-player-vast-vpaid,
+  .carodaInstreamWithPositions .carodaVvOutstreamPlayer .caroda-player-ima,
+  .carodaInstreamWithPositions .carodaVvOutstreamPlayer .caroda-player-vast-vpaid {
+    height: 100%;
+    padding-bottom: 0 !important; }
+
+.carodaInstream.adLoaded .caroda-player-content,
+.carodaInstreamWithPositions.adLoaded .caroda-player-content {
+  padding-bottom: 56% !important; }
+
+.carodaInstreamWithPositions {
+  z-index: 10;
+  background: transparent; }
+
+.carodaSmartclipContainer:before {
+  display: none; }
+
+.carodaSmartclipContainer.loaded {
+  max-width: 100% !important;
+  width: 400px;
+  height: 240px !important;
+  margin: auto;
+  margin-top: var(--advertising-label-height); }
+  .carodaSmartclipContainer.loaded:before {
+    display: block;
+    text-align: center;
+    color: var(--caroda-advertising-label-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 9px;
+    position: absolute;
+    left: 0;
+    right: 0; }
+  .carodaSmartclipContainer.loaded > * {
+    max-width: 100% !important;
+    top: 15px !important; }
+  .carodaSmartclipContainer.loaded .OutstreamPlayer__advertisementlabel {
+    display: none; }
+
+.carodaMultiPosition {
+  transition: all 0.6s, top 0s, left 0s, width 0s, height 0s, padding-top 0s, margin-top 0s, padding-bottom 0s, margin-bottom 0s;
+  overflow-x: hidden; }
+  .carodaMultiPosition .carodaTeadsContainer {
+    height: 0 !important; }
+    .carodaMultiPosition .carodaTeadsContainer.loaded {
+      height: auto !important; }
+
+.carodaMultiPositionPlayerNoPlaceholder {
+  visibility: hidden !important; }
+
+.carodaMultiPositionPlaceholder {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  height: 0; }
+
+.carodaMultiPositionPlaceholderStickySentinel {
+  height: 1px;
+  width: 1px;
+  float: right;
+  margin-left: -1px; }
+
+.carodaTeadsPrebid .teads-ui-components-label {
+  display: none !important; }
+
+.carodaAniview iframe {
+  width: 100%;
+  height: 0;
+  border: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+.carodaBannerOuterContainer:not(.carodaVideoFrameBannerOuterContainer) {
+  height: 0 !important;
+  min-height: 0 !important; }
+  .carodaBannerOuterContainer:not(.carodaVideoFrameBannerOuterContainer).loaded {
+    height: auto !important;
+    min-height: auto !important; }
+
+.carodaBannerOuterContainer.caroda-magnite-apex-preloading:not(
+.carodaVideoFrameBannerOuterContainer
+),
+.carodaOutstream:has(.caroda-magnite-apex-preloading):not(.adLoaded) {
+  width: 100% !important;
+  height: 300px !important;
+  min-height: 300px !important;
+  position: absolute !important;
+  z-index: -99999 !important; }
+  .carodaBannerOuterContainer.caroda-magnite-apex-preloading:not(
+  .carodaVideoFrameBannerOuterContainer
+) .carodaBannerContainer,
+  .carodaOutstream:has(.caroda-magnite-apex-preloading):not(.adLoaded) .carodaBannerContainer {
+    visibility: visible !important;
+    pointer-events: none !important; }
+
+.carodaBannerOuterContainer {
+  overflow: hidden !important; }
+
+.carodaOutstream .teads-player.native {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important; }
+
+.carodaInvisibleIframe {
+  width: 0 !important;
+  height: 0 !important;
+  border: none !important;
+  pointer-events: none !important; }
